@@ -1,5 +1,6 @@
+{% load crispy_forms_tags %}
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}  <!-- form の内容を p タグで囲って表示 -->
-    <input type="submit" value="{{ submit_label }}" />  <!-- ボタンが変数で変えられる -->
+    {{ form | crispy }}
+    <input type="submit" value="{{ submit_label }}" />
 </form>
