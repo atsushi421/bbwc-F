@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'application',
+    'application',  # django では上から HTML を見ていくので、これが適用される
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -105,7 +105,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ja'
 
 TIME_ZONE = 'UTC'
 
@@ -126,3 +126,13 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # メールをコンソールに表示してくれる
+
+LOGIN_URL = "/login/"  # login_required のページにアクセスした際に、ログインしていなかった場合のURL
+LOGIN_REDIRECT_URL = "/"  # ログイン成功後のURL
+LOGOUT_REDIRECT_URL = "/login/"  # ログアウト後の URL
+
+AUTH＿USER_MODEL = 'application.User'  # プロジェクト全体で使用するユーザモデル
+
+FRONTEND_URL = 'http://127.0.0.1:8000' 

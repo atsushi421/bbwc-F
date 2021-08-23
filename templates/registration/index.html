@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block main %}
+<h2>会員ページ</h2>
+<p>{{ user }}さん、こんにちは！</p>  <!-- user はデフォルトで使用できる変数。アクセスしているユーザを返す -->
+
+<!-- 下の URL 名は決められたものなので、間違えないようにする -->
+<p><a href="{% url 'logout' %}">ログアウト</a></p>
+<p><a href="{% url 'password_change' %}">パスワードの変更</a></p>
+<p><a href="{% url 'password_reset' %}">パスワードを忘れた場合</a></p>
+{% endblock %}
