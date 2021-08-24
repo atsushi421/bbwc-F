@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
+from django import forms
 from django.conf import settings
 
 # メール認証をするときのテンプレ
@@ -29,7 +30,7 @@ def get_activate_url(user):
 class SignUpForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2")
+        fields = ("username", "email", "password1", "password2", "key1", "key2", "key3", "key4", "key5",)
 
     def save(self, commit=True):
         # commit=Falseだと、DBに保存されない
@@ -45,6 +46,11 @@ class SignUpForm(UserCreationForm):
             message = message_template + activate_url  # メール本文に URL を付ける
             user.email_user(subject, message)  # メール送信
         return user
+
+class ProfileForm(forms.ModelForm):
+        class Meta:
+            model = User
+            fields = ("key1", "key2", "key3", "key4", "key5")
         
         
 # ユーザ認証を行い、ユーザを有効化して、DBに保存する
