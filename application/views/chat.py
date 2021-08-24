@@ -22,12 +22,13 @@ class ChatView(View):
     def post(self, request, *args, **kwargs):
         room_name = kwargs['room_name']
         room = Room.objects.get(name=room_name)
+        user = User.objects.get(id=request.user.id)
         form = UploadForm(request.POST, request.FILES)
         
         if('message' not in request.POST):  # ファイルアップロードの場合
             file = request.FILES['file']
             if form.is_valid():
-                file_instance = File(file=file, room=room)
+                file_instance = File(file=file, room=room, user=user)
                 file_instance.save()
                 
             message = file.name + " をアップロードしました"

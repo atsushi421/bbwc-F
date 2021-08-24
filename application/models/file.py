@@ -1,5 +1,8 @@
 from django.db import models
 from . import Room
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class File(models.Model):
     file = models.FileField(
@@ -15,4 +18,11 @@ class File(models.Model):
         blank=True,
         null=True,
         on_delete=models.CASCADE,
+    )
+    
+    user = models.ForeignKey(
+        User,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
     )

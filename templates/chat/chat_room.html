@@ -6,7 +6,8 @@
 
 <div class="header">
 <a href="/" class="back">＜戻る</a>
-Django - チャットアプリデモ - {{ room.name }}
+{{ room.name }}
+<a href="{% url 'file_list' room.name %}" class="back_right">資料一覧</a>
 </div>
 
 <div class="chat-room-body">

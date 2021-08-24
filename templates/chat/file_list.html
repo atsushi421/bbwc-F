@@ -1,0 +1,17 @@
+{% load static %}
+{% block main %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'chat.css' %}">
+
+<div class="header">
+    <a href="{% url 'chat_room' room.name %}" class="back">＜戻る</a>
+    </div>
+
+<h2>資料一覧</h2>
+<ul>
+{% for doc in file_list %}
+<p><a href="{{ doc.file.url }}">{{ doc.file.name }}</a></p>
+{% endfor %}
+</ul>
+
+{% endblock %}

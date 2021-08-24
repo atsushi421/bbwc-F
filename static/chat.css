@@ -54,6 +54,12 @@ a {
     color: white;
 }
 
+.back_right {
+    position: absolute;
+    right: 20px;
+    color: white;
+}
+
 .back {
     position: absolute;
     left: 20px;
