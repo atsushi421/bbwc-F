@@ -61,6 +61,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.media',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -133,6 +134,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # メールを
 LOGIN_URL = "/login/"  # login_required のページにアクセスした際に、ログインしていなかった場合のURL
 LOGIN_REDIRECT_URL = "/"  # ログイン成功後のURL
 LOGOUT_REDIRECT_URL = "/login/"  # ログアウト後の URL
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 AUTH＿USER_MODEL = 'application.User'  # プロジェクト全体で使用するユーザモデル
 

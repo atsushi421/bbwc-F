@@ -37,7 +37,7 @@ def get_search_results_df(keyword,number):
     ua = UserAgent()
     user_agent = ua.random
     header = {"User-Agent":user_agent}
-    time.sleep(5)
+    #time.sleep(5)
     
     columns = ["rank", "title", "writer", "year", "citations", "url"]
     df = pd.DataFrame(columns=columns) #表の作成

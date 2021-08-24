@@ -6,7 +6,8 @@
 
 <div class="header">
 <a href="/" class="back">＜戻る</a>
-Django - チャットアプリデモ - {{ room.name }}
+{{ room.name }}
+<a href="{% url 'file_list' room.name %}" class="back_right">資料一覧</a>
 </div>
 
 <div class="chat-room-body">
@@ -22,6 +23,12 @@ Django - チャットアプリデモ - {{ room.name }}
 {% endfor %}
     <div id="footer"></div>
 </div>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="アップロード">
+</form>
 
 <div class="chat-room-footer">
     <div class="send-msg">

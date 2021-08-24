@@ -13,3 +13,7 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(models.Message)
 class CategoryAdmin(admin.ModelAdmin):
     pass
+
+@admin.register(models.File)
+class CategoryAdmin(admin.ModelAdmin):
+    pass

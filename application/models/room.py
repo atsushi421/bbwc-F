@@ -18,5 +18,10 @@ class Room(models.Model):
         default = None,
     )
     
+    files = models.FileField(
+        blank = True,
+        upload_to= 'files/'
+    )
+    
     def __str__(self):
         return self.name
