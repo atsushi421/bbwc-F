@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 from django import forms
 from django.conf import settings
+from .models import Room
 
 # メール認証をするときのテンプレ
 from django.contrib.auth.tokens import default_token_generator
@@ -46,11 +47,6 @@ class SignUpForm(UserCreationForm):
             message = message_template + activate_url  # メール本文に URL を付ける
             user.email_user(subject, message)  # メール送信
         return user
-
-class ProfileForm(forms.ModelForm):
-        class Meta:
-            model = User
-            fields = ("key1", "key2", "key3", "key4", "key5")
         
         
 # ユーザ認証を行い、ユーザを有効化して、DBに保存する

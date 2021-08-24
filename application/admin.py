@@ -5,3 +5,11 @@ from . import models
 @admin.register(models.User)
 class CategoryAdmin(admin.ModelAdmin):
     pass
+
+@admin.register(models.Room)
+class CategoryAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(models.Message)
+class CategoryAdmin(admin.ModelAdmin):
+    pass

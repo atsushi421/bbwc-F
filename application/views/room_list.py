@@ -6,14 +6,21 @@ from ..models import *
 
 class RoomListView(View):
     def get(self, request, *args, **kwargs):
-        context = {}
+        room_list = Room.objects.all()
+        
+        context = {
+            'room_list' : room_list,
+        }
         return render(request, 'chat/room_list.html', context)
     
     
     def post(self, request, *args, **kwargs):
         name = request.POST['room_name']
-        Room.objects.create(name=name)
+        user = User.objects.get(id=request.user.id)
+        room = Room.objects.create(name=name)
+        room.part.add(user)
+        room.save()
         
-        return redirect(reverse('chat_room', args=[name]))
+        return redirect('/chat/' + name, args=[name])
         
         

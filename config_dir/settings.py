@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'channels',
 ]
 
 MIDDLEWARE = [
@@ -72,17 +71,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config_dir.wsgi.application'
-ASGI_APPLICATION = 'config_dir.routing.application'
 
-# Redisの設定
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [('redis', 6379)]
-        }
-    }
-}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
