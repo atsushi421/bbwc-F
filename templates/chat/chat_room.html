@@ -23,6 +23,12 @@ Django - チャットアプリデモ - {{ room.name }}
     <div id="footer"></div>
 </div>
 
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="アップロード">
+</form>
+
 <div class="chat-room-footer">
     <div class="send-msg">
         <form method="post">

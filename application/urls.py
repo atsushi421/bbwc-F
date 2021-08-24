@@ -3,6 +3,8 @@ from django.urls import path, include  # include は委譲
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 from .views import signup, activate, index, chat, room_list, profile
+from django.conf.urls.static import static
+from config_dir import settings
 
 
 
@@ -15,3 +17,5 @@ urlpatterns = [
     path('chat/<str:room_name>', chat.ChatView.as_view(), name='chat_room'),
     path('room_list/', room_list.RoomListView.as_view(), name='room_list'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
