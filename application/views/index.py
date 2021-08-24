@@ -1,13 +1,25 @@
 from django.views import View
 from django.shortcuts import render
 from bs4 import BeautifulSoup
+from ..models import User
 import requests
 import pandas as pd
 import re
 
 class IndexView(View):
     def get(self, request, *args, **kwargs):
-        keyword = "machine learning"
+        user = User.objects.get(pk=request.user.id)
+        keyword = user.key1
+        if(user.key2 != None):
+            keyword += " " + user.key2
+        if(user.key3 != None):
+            keyword += " " + user.key3
+        if(user.key4 != None):
+            keyword += " " + user.key4
+        if(user.key5 != None):
+            keyword += " " + user.key5
+        print(keyword)
+        
         number = 10
         search_results_df = get_search_results_df(keyword,number)
         
