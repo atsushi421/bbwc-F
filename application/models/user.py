@@ -10,7 +10,7 @@ class User(AbstractUser):
         max_length = 255,
         blank = False,
         null = False,
-        default=None,
+        default="",
     )
     
     key2 = models.CharField(

@@ -1,7 +1,6 @@
 from django.views.generic import UpdateView
 from django.urls import reverse_lazy
 from ..models import User
-from ..forms import ProfileForm
 
 
 class ProfileView(UpdateView):
