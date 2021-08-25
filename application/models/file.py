@@ -6,7 +6,7 @@ User = get_user_model()
 
 class File(models.Model):
     file = models.FileField(
-        upload_to='files/',
+        upload_to='',
         blank=False,
         null=False,
     )

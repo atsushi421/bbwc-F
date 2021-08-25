@@ -5,7 +5,7 @@
 <div class="container">
 
 <div class="header">
-<a href="/" class="back">＜戻る</a>
+<a href="{% url 'room_list' %}" class="back">＜戻る</a>
 {{ room.name }}
 <a href="{% url 'file_list' room.name %}" class="back_right">資料一覧</a>
 </div>
