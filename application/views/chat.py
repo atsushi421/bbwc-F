@@ -37,7 +37,7 @@ class ChatView(View):
             message =  "この部屋をブックマークしました"
         
         elif('rm_bookmark' in request.POST):
-            user.book.add(room)
+            user.book.remove(room)
             user.save()
             message =  "この部屋のブックマークを消しました"
         
@@ -59,12 +59,16 @@ class ChatView(View):
         
         messages = Message.objects.filter(room__name=room_name).order_by('-created_at')[:50]
         room = Room.objects.filter(name=room_name)[0]
-        
+        num_bookmark = room.user_set.count()
         
         context = {
             'messages': messages,
             'room': room,
-            'form':form
+            'form':form,
+            'num_bookmark':num_bookmark
         }
+        
+        if(room in user.book.all()):
+            context |= {'book_flag':True}
         
         return render(request, 'chat/chat_room.html', context)

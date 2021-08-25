@@ -1,5 +1,29 @@
-{% extends "base.html" %}
-{% block main %}
-{% include "_form.html" with submit_label="更新" %}
-<p><a href="{% url 'password_change' %}">パスワードの変更</a></p>
-{% endblock %}
+{% load crispy_forms_tags %}
+
+<!doctype HTML>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../../static/login.css">
+    </head>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Home</a>
+        <a class="navbar-brand" href="{% url 'password_change' %}">パスワードの変更</a>
+    </nav>
+
+    <div class="form-wrapper">
+        <h1>Profile Update</h1>
+        <div class="form-item">
+            <form method="post">
+                {% csrf_token %}
+                {{ form | crispy }}
+        </div>
+        <div class="button-panel">
+            <input type="submit" class="button" title="Update" value="Update"></input>
+        </div>
+            </form>
+    </div>
+</html>
