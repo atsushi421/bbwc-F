@@ -8,6 +8,10 @@
 <a href="{% url 'room_list' %}" class="back">＜戻る</a>
 {{ room.name }}
 <a href="{% url 'file_list' room.name %}" class="back_right">資料一覧</a>
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" class="send" name="bookmark" value="ブックマーク">
+</form>
 </div>
 
 <div class="chat-room-body">
@@ -27,7 +31,7 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form }}
-    <input type="submit" value="アップロード">
+    <input type="submit" name="upload" value="アップロード">
 </form>
 
 <div class="chat-room-footer">

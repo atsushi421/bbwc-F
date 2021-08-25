@@ -26,8 +26,16 @@ class IndexView(View):
         number = 10
         search_results_df = get_search_results_df(keyword,number)
         
+        # ランキング用
+        ranking = User.objects.order_by('score').reverse().all()
+        
+        # ブックマーク表示用
+        bookmark = user.book.all()
+        
         context = {
             'search_results' : search_results_df.to_html(),
+            'ranking' : ranking,
+            'bookmark' : bookmark,
         }
         
         return render(request, 'registration/index.html', context)

@@ -5,7 +5,8 @@ from ..models import *
 
 class ProfileView(View):
     def get(self, request, *args, **kwargs):
-        score = File.objects.filter(user_id=request.user.id).count() * 10
+        user = User.objects.get(id=request.user.id)
+        score = user.score
         file_list = File.objects.filter(user_id=request.user.id)
         
         context = {

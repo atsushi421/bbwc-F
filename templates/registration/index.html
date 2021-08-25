@@ -7,6 +7,17 @@
 <p><a href="https://scholar.google.co.jp/">Google Scholar</a></p>
 <p><a href="{% url 'room_list' %}">部屋検索</a></p>
 
+<hr>
+<h2>ブックマークしてる部屋一覧</h2>
+{% for book in bookmark %}
+<p>{{ book.name }}</p>
+{% endfor %}
+
+<hr>
+<h2>ランキング</h2>
+{% for us in ranking %}
+<p>{{ us.score }} : {{ us.username }} : {{ us.email }}</p>
+{% endfor %}
 
 <hr>
 <h2>おすすめの論文</h2>

@@ -25,13 +25,21 @@ class ChatView(View):
         user = User.objects.get(id=request.user.id)
         form = UploadForm(request.POST, request.FILES)
         
-        if('message' not in request.POST):  # ファイルアップロードの場合
+        if('bookmark' in request.POST):  # ブックマークの場合
+            user.book.add(room)
+            user.save()
+            message =  "この部屋をブックマークしました"
+        
+        elif('upload' in request.POST):  # ファイルアップロードの場合
             file = request.FILES['file']
             if form.is_valid():
                 file_instance = File(file=file, room=room, user=user)
                 file_instance.save()
+                user.score += 10
+                user.save()
                 
             message = file.name + " をアップロードしました"
+            
         else:
             message = request.POST['message']
             
