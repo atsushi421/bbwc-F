@@ -5,18 +5,30 @@
 <div class="container">
 
 <div class="header">
-<a href="{% url 'room_list' %}" class="back">＜戻る</a>
-{{ room.name }}  {{ num_bookmark }} 人がブックマークしています
+<a href="{% url 'index' %}" class="back">Home</a>
+{{ room.name }} &nbsp; [{{ num_bookmark }}] &nbsp; ({{ num_jourclub }})
 <a href="{% url 'file_list' room.name %}" class="back_right">資料一覧</a>
 {% if book_flag %}
 <form method="post">
     {% csrf_token %}
-    <input type="submit" class="send" name="rm_bookmark" value="ブックマークを消す">
+    <input type="submit" name="rm_bookmark" value="ブックマークを消す">
 </form>
 {% else %}
 <form method="post">
     {% csrf_token %}
-    <input type="submit" class="send" name="bookmark" value="ブックマーク">
+    <input type="submit" name="bookmark" value="ブックマーク">
+</form>
+{% endif %}
+
+{% if jourclub_flag %}
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" name="rm_jourclub" value="輪講の希望を取り下げる">
+</form>
+{% else %}
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" name="jourclub" value="輪講を希望する">
 </form>
 {% endif %}
 </div>

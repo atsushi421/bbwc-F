@@ -1,33 +1,25 @@
-{% extends "base.html" %}
-{% load static %}
-{% block main %}
-
-<link rel="stylesheet" type="text/css" href="{% static 'chat.css' %}">
-
-<h2>ルームを新しく作成する<h2>
-    <div class="create-room-box">
-        <form action="/room_list/" method="post">
-            {% csrf_token %}
-            <input placeholder="ルーム名を入力" type="text" name="room_name" value="">
-            <input type="submit" class="send" name="button" value="作成"> 
-        </form>
+<!doctype HTML>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../static/style.css">
+        <link rel="stylesheet" href="../../static/login.css">
+    </head>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Home</a>
+        <a class="navbar-brand" href="{% url 'create_room' %}">部屋作成</a>
+    </nav>
+    <div class="form-wrapper2">
+        <h1>Search Result</h1>
+        <div class="form-footer2">
+            <ul>
+            {% for room in room_list %}
+                <li><a href="/chat/{{ room.name }}">{{ room.name }} &nbsp; [{{ room.user_set.count }}] &nbsp; ({{ room.jourclub.count }})</a></li>
+            {% endfor %}
+            </ul>
+        </div>
     </div>
-
-<hr>
-<h2>ルーム名で検索<h2>
-    <div class="create-room-box">
-        <form method="get">
-            {% csrf_token %}
-            <input placeholder="ルーム名を入力" type="text" name="room_name" value="">
-            <input type="submit" class="send" name="button" value="作成"> 
-        </form>
-    </div>
-    
-<h2>ルーム一覧</h2>
-<ul class="select-room-box">
-{% for room in room_list %}
-    <a href="/chat/{{ room.name }}">{{ room.name }}</a>
-{% endfor %}
-</ul>
-
-{% endblock %}
+</html>

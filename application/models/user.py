@@ -50,3 +50,9 @@ class User(AbstractUser):
         Room,
         blank=True
     )
+    
+    jourclub = models.ManyToManyField(
+        Room,
+        blank=True,
+        related_name='jourclub'
+    )
