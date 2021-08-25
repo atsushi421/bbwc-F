@@ -7,6 +7,7 @@ import requests
 import pandas as pd
 import re
 import time
+import json
 
 
 class IndexView(View):
@@ -32,8 +33,12 @@ class IndexView(View):
         # ブックマーク表示用
         bookmark = user.book.all()
         
+        json_records = search_results_df.reset_index().to_json(orient ='records')
+        data = []
+        data = json.loads(json_records)
+        
         context = {
-            'search_results' : search_results_df.to_html(),
+            'search_results' : data,
             'ranking' : ranking,
             'bookmark' : bookmark,
         }
