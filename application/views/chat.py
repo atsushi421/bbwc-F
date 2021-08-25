@@ -6,16 +6,22 @@ from ..models import *
 class ChatView(View):
     def get(self, request, *args, **kwargs):
         room_name = kwargs['room_name']
-        
+        user = User.objects.get(id=request.user.id)
         messages = Message.objects.filter(room__name=room_name).order_by('-created_at')[:50]
         room = Room.objects.filter(name=room_name)[0]
         form = UploadForm()
+        num_bookmark = room.user_set.count()
         
         context = {
             'messages': messages,
             'room': room,
-            'form':form
+            'form':form,
+            'num_bookmark':num_bookmark
         }
+        
+        if(room in user.book.all()):
+            context |= {'book_flag':True}
+        
         
         return render(request, 'chat/chat_room.html', context)
     
@@ -29,6 +35,11 @@ class ChatView(View):
             user.book.add(room)
             user.save()
             message =  "この部屋をブックマークしました"
+        
+        elif('rm_bookmark' in request.POST):
+            user.book.add(room)
+            user.save()
+            message =  "この部屋のブックマークを消しました"
         
         elif('upload' in request.POST):  # ファイルアップロードの場合
             file = request.FILES['file']
