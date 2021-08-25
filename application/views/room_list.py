@@ -16,10 +16,8 @@ class RoomListView(View):
     
     def post(self, request, *args, **kwargs):
         name = request.POST['room_name']
-        user = User.objects.get(id=request.user.id)
         room = Room.objects.create(name=name)
-        room.part.add(user)
-        room.save()
+
         
         return redirect('/chat/' + name, args=[name])
         

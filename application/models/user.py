@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from .room import Room
 
 
 # ユーザモデルの拡張
@@ -39,4 +40,13 @@ class User(AbstractUser):
         blank = True,
         null = True,
         default="",
+    )
+    
+    score = models.IntegerField(
+        default=0,
+    )
+    
+    book = models.ManyToManyField(
+        Room,
+        blank=True
     )
