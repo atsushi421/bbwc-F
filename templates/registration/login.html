@@ -1,6 +1,26 @@
-{% extends "base.html" %}
-{% block main %}
-<h2>ログイン</h2>
-{% include "_form.html" with submit_label="ログイン" %}  <!-- 外部テンプレートの読み込み。変数にログインを入れている -->
-<p><a href="{% url 'signup' %}">サインアップ</a></p>
-{% endblock %}
+{% load crispy_forms_tags %}
+
+<!doctype HTML>
+<html>
+    <head>
+        <link rel="stylesheet" href="../../static/login.css">
+    </head>
+
+    <div class="form-wrapper">
+        <h1>Sing In</h1>
+        <div class="form-item">
+            <form method="post">
+                {% csrf_token %}
+                {{ form | crispy }}
+        </div>
+        <div class="button-panel">
+            <input type="submit" class="button" title="Sign In" value="Sign In"></input>
+        </div>
+            </form>
+
+        <div class="form-footer">
+            <p><a href="{%url 'signup'%}">Create an account</a></p>
+            <p><a href="{% url 'password_reset' %}">Forgot password?</a></p>
+        </div>
+    </div>
+</html>

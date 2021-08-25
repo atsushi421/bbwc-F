@@ -1,30 +1,38 @@
-{% extends "base.html" %}
-{% block main %}
+<!doctype HTML>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../static/style.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="{% url 'logout' %}">ログアウト</a>
+        </nav>
+        <div class="container mt-4">
+            <h2>会員ページ</h2>
+            <p>{{ user }}さん、こんにちは！</p>
+            <p><a href="{% url 'profile' user.id %}">プロフィール</a></p>
+            <p><a href="https://scholar.google.co.jp/">Google Scholar</a></p>
+            <p><a href="{% url 'room_list' %}">部屋検索</a></p>
 
-<h2>会員ページ</h2>
-<p>{{ user }}さん、こんにちは！</p>
-<p><a href="{% url 'profile' user.id %}">プロフィール</a></p>
-<p><a href="https://scholar.google.co.jp/">Google Scholar</a></p>
-<p><a href="{% url 'room_list' %}">部屋検索</a></p>
+            <hr>
+            <h2>ブックマークしてる部屋一覧</h2>
+            {% for book in bookmark %}
+            <a href="/chat/{{ book.name }}">{{ book.name }}</a>
+            {% endfor %}
 
-<hr>
-<h2>ブックマークしてる部屋一覧</h2>
-{% for book in bookmark %}
-<p>{{ book.name }}</p>
-{% endfor %}
+            <hr>
+            <h2>ランキング</h2>
+            {% for us in ranking %}
+            <p>{{ us.score }} : {{ us.username }} : {{ us.email }}</p>
+            {% endfor %}
 
-<hr>
-<h2>ランキング</h2>
-{% for us in ranking %}
-<p>{{ us.score }} : {{ us.username }} : {{ us.email }}</p>
-{% endfor %}
-
-<hr>
-<h2>おすすめの論文</h2>
-{{ search_results | safe }}
-
-<!-- 下の URL 名は決められたものなので、間違えないようにする -->
-<hr>
-<p><a href="{% url 'logout' %}">ログアウト</a></p>
-<p><a href="{% url 'password_reset' %}">パスワードを忘れた場合</a></p>
-{% endblock %}
+            <hr>
+            <h2>おすすめの論文</h2>
+            {{ search_results | safe }}
+        </div>
+    </body>
+</html>
