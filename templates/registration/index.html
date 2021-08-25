@@ -1,16 +1,77 @@
 {% extends "base.html" %}
 {% block main %}
 
-<h2>会員ページ</h2>
-<p>{{ user }}さん、こんにちは！</p>
-<p><a href="{% url 'profile' user.id %}">プロフィール</a></p>
-<p><a href="https://scholar.google.co.jp/">Google Scholar</a></p>
-<p><a href="{% url 'room_list' %}">部屋検索</a></p>
+<!-- {% load static %} -->
+<link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
+
+<div class="titlebar">
+   <!-- <p class="subject">◆HTML＆CSS入門</p> -->
+   <h2 class="subject"><a href="{% url 'profile' user.id %}">{{ user }}</a> さん</h2>
+   <h2 class="date"><a href="https://scholar.google.co.jp/">Google Scholar</a>で検索</h2>
+   <!-- <p class="date">11月27日(月)</p> -->
+</div>
+
+
+<br><br><br><br>
+
+<p class="text-center"><a href="{% url 'room_list' %}">部屋検索</a></p>
+<p class="text-center">読みたい論文名を入力して部屋を検索</p>
+<form action="{% url 'room_list' %}" method="post">
+  <!-- <p>検索したいキーワードを入力してください。</p> -->
+  <input type="search" name="search" placeholder="論文名を入力">
+  <input type="submit" name="submit" value="検索">
+</form>
+
 
 
 <hr>
-<h2>おすすめの論文</h2>
-{{ search_results | safe }}
+<h2 class="text-center">入室リスト</h2>
+<hr>
+
+<hr>
+<h2 class="text-center">ランキング</h2>
+<hr>
+
+
+<!-- <h2>おすすめの論文</h2> -->
+<!-- {{ search_results | safe }} -->
+
+<h2 class="text-center"><u>おすすめの論文</u></h2><br>
+<div class="container">
+  <!-- <table class="table table-dark table-striped"> -->
+  <table class="design01">
+    <thead>
+      <tr>
+        <th>rank</th>
+        <th>title</th>
+        <th>writer</th>
+        <th>year</th>
+        <th>citations</th>
+        <th>url</th>
+      </tr>
+    </thead>
+    <tbody>
+    <!-- jinja2 Technique -->
+    {% if search_results %}
+    {% for i in search_results %}
+      <tr>
+        <td>{{i.rank}}</td>
+        <td>{{i.title}}</td>
+        <td>{{i.writer}}</td>
+        <td>{{i.year}}</td>
+        <td>{{i.citaitons}}</td>
+        <td>{{i.url}}</td>
+      </tr>
+    {% endfor %}
+    {% endif %}
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
 
 <!-- 下の URL 名は決められたものなので、間違えないようにする -->
 <hr>
