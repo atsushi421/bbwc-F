@@ -2,7 +2,7 @@ from django.views import View
 from django.shortcuts import render
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
-from ..models import User
+from ..models import User, Room
 import requests
 import pandas as pd
 import re
@@ -43,7 +43,22 @@ class IndexView(View):
             'bookmark' : bookmark,
         }
         
+        # 輪講希望を出している部屋に輪講希望者が2人以上いれば、通知を表示
+        jourclub_rooms = user.jourclub.all()
+        for jourclub_room in jourclub_rooms:
+            if(jourclub_room.jourclub.count() >= 2):
+                context |= {'chance_flag': True }
+                break
+                
         return render(request, 'registration/index.html', context)
+    
+    def post(self, request, *args, **kwargs):
+        room_list = Room.objects.filter(name__icontains=request.POST['keyword'])
+        
+        context = {
+            'room_list' : room_list,
+        }
+        return render(request, 'chat/room_list.html', context)
 
 
 def get_search_results_df(keyword,number):

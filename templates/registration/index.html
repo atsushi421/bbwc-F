@@ -1,3 +1,5 @@
+{% load static %}
+
 <!doctype HTML>
 <html>
     <head>
@@ -5,23 +7,35 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'chat.css' %}">
         <link rel="stylesheet" href="../static/style.css">
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="{% url 'logout' %}">ログアウト</a>
         </nav>
+        {% if chance_flag %}
+            <div class="alert alert-success">あなたが輪講希望を出している部屋に輪講希望が出されています！</div>
+        {% endif %}
         <div class="container mt-4">
             <h2>会員ページ</h2>
             <p>{{ user }}さん、こんにちは！</p>
             <p><a href="{% url 'profile' user.id %}">プロフィール</a></p>
             <p><a href="https://scholar.google.co.jp/">Google Scholar</a></p>
-            <p><a href="{% url 'room_list' %}">部屋検索</a></p>
+            <p><a href="{% url 'create_room' %}">部屋作成</a></p>
+
+            <div class="create-room-box">
+                <form method="post">
+                    {% csrf_token %}
+                    <input placeholder="キーワードを入力" type="text" name="keyword" value="">
+                    <input type="submit" class="send" name="search" value="検索"> 
+                </form>
+            </div>
 
             <hr>
             <h2>ブックマークしてる部屋一覧</h2>
             {% for book in bookmark %}
-            <a href="/chat/{{ book.name }}">{{ book.name }}</a>
+            <a href="/chat/{{ book.name }}">{{ book.name }} &nbsp; [{{ book.user_set.count }}] &nbsp; ({{ book.jourclub.count }})</a>
             {% endfor %}
 
             <hr>
