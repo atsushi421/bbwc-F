@@ -31,7 +31,7 @@ def get_activate_url(user):
 class SignUpForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2", "key1", "key2", "key3", "key4", "key5",)
+        fields = ("username", "email", "password1", "password2", "keyword1", "keyword2", "keyword3", "keyword4", "keyword5",)
 
     def save(self, commit=True):
         # commit=Falseだと、DBに保存されない

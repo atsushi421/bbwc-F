@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="../../static/login.css">
     </head>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Home</a>
+        <a class="navbar-brand" href="/"><u>Home</u></a>
     </nav>
 
     <div class="form-wrapper">
@@ -16,7 +16,7 @@
         <div class="form-item">
             <form method="post">
                 {% csrf_token %}
-                <input placeholder="ルーム名を入力" type="text" name="room_name" value="">
+                <input placeholder="Please enter the 'paper name' you want to read." type="text" name="room_name" value="">
         </div>
         <div class="button-panel">
             <input type="submit" class="button" title="Create" value="Create"></input>

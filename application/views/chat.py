@@ -82,8 +82,8 @@ class ChatView(View):
         else:
             message = request.POST['message']
             
-        user_name = request.user.username
-        Message.objects.create(room=room, name=user_name, content=message)
+        user = User.objects.get(id=request.user.id)
+        Message.objects.create(room=room, user=user, content=message)
         
         messages = Message.objects.filter(room__name=room_name).order_by('-created_at')[:50]
         room = Room.objects.filter(name=room_name)[0]
