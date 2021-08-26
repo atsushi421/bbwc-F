@@ -27,12 +27,9 @@ class ChatView(View):
         if(room in user.jourclub.all()):
             context |= {'jourclub_flag':True}
             
-        # 輪講希望を出している部屋に輪講希望者が2人以上いれば、通知を表示
-        jourclub_rooms = user.jourclub.all()
-        for jourclub_room in jourclub_rooms:
-            if(jourclub_room.jourclub.count() >= 2):
-                context |= {'chance_flag': True }
-                break
+        # 輪講希望者が2人以上いれば
+        if(room.jourclub.count() >= 2):
+            context |= {'chance_flag': True }
         
         
         return render(request, 'chat/chat_room.html', context)
@@ -71,7 +68,8 @@ class ChatView(View):
             else:
                 paper_instance = Paper.objects.get(name=room_name)
                 user.paper_set.add(paper_instance)
-                
+            
+            user.jourclub.remove(room)
             user.score += 20
             user.save()
             message =  "Start the journal club.\nPlease paste the meeting link and join the meeting."
@@ -111,11 +109,8 @@ class ChatView(View):
         if(room in user.jourclub.all()):
             context |= {'jourclub_flag':True}
             
-        # 輪講希望を出している部屋に輪講希望者が2人以上いれば、通知を表示
-        jourclub_rooms = user.jourclub.all()
-        for jourclub_room in jourclub_rooms:
-            if(jourclub_room.jourclub.count() >= 2):
-                context |= {'chance_flag': True }
-                break
+        # 輪講希望者が2人以上いれば
+        if(room.jourclub.count() >= 2):
+            context |= {'chance_flag': True }
         
         return render(request, 'chat/chat_room.html', context)
