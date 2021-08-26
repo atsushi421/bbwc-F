@@ -14,7 +14,7 @@
 
     <div class="header">
         <a href="{% url 'index' %}" class="back">Home</a>
-        <div style="font-size: 20px;">{{ room.name }} &nbsp; [{{ num_bookmark }}] &nbsp; ({{ num_jourclub }})</div>
+        <div style="font-size: 20px;">{{ room.name }} &nbsp; [{{ num_bookmark }}]&nbsp;({{ num_jourclub }})</div>
         <a href="{% url 'file_list' room.name %}" class="back_right">Uploaded File Lists</a>
         {% if book_flag %}
         <form method="post">
