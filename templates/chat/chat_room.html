@@ -1,66 +1,91 @@
 {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'chat.css' %}">
+<!doctype HTML>
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'chat.css' %}">
+        <link rel="stylesheet" href="../../static/login.css">
+    </head>
 
-<div class="container">
+    <div class="container">
 
-<div class="header">
-<a href="{% url 'index' %}" class="back">Home</a>
-{{ room.name }} &nbsp; [{{ num_bookmark }}] &nbsp; ({{ num_jourclub }})
-<a href="{% url 'file_list' room.name %}" class="back_right">資料一覧</a>
-{% if book_flag %}
-<form method="post">
-    {% csrf_token %}
-    <input type="submit" name="rm_bookmark" value="ブックマークを消す">
-</form>
-{% else %}
-<form method="post">
-    {% csrf_token %}
-    <input type="submit" name="bookmark" value="ブックマーク">
-</form>
-{% endif %}
-
-{% if jourclub_flag %}
-<form method="post">
-    {% csrf_token %}
-    <input type="submit" name="rm_jourclub" value="輪講の希望を取り下げる">
-</form>
-{% else %}
-<form method="post">
-    {% csrf_token %}
-    <input type="submit" name="jourclub" value="輪講を希望する">
-</form>
-{% endif %}
-</div>
-
-<div class="chat-room-body">
-{% for message in messages %}
-    <div class="chat-box">
-        <div class="chat-header">
-            名前：{{message.name}}
-        </div>
-        <div class="chat-body">
-            {{message.content}}
-        </div>
-    </div>
-{% endfor %}
-    <div id="footer"></div>
-</div>
-
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" name="upload" value="アップロード">
-</form>
-
-<div class="chat-room-footer">
-    <div class="send-msg">
+    <div class="header">
+        <a href="{% url 'index' %}" class="back">Home</a>
+        {{ room.name }} &nbsp; [{{ num_bookmark }}] &nbsp; ({{ num_jourclub }})
+        <a href="{% url 'file_list' room.name %}" class="back_right">資料一覧</a>
+        {% if book_flag %}
         <form method="post">
             {% csrf_token %}
-            <input placeholder="メッセージを入力" type="text" name="message" value="">
-            <input type="submit" class="send" name="button" value="作成"> 
+            <input type="submit" name="rm_bookmark" value="ブックマークを消す" style="height:30px;border-radius:30px;color:red;font-weight: bold;">
         </form>
-    </div>
-</div>
+        {% else %}
+        <form method="post">
+            {% csrf_token %}
+            <input type="submit" name="bookmark" value="ブックマーク" style="height:30px;border-radius:30px;color:blue;font-weight: bold;">
+        </form>
+        {% endif %}
 
-</div>
+        {% if jourclub_flag %}
+        <form method="post">
+            {% csrf_token %}
+            <input type="submit" name="rm_jourclub" value="輪講の希望を取り下げる" style="height:30px;border-radius:30px;color:red;font-weight: bold;">
+        </form>
+        {% else %}
+        <form method="post">
+            {% csrf_token %}
+            <input type="submit" name="jourclub" value="輪講を希望する" style="height:30px;border-radius:30px;color:blue;font-weight: bold;">
+        </form>
+        {% endif %}
+    </div>
+
+    <div class="chat-room-body">
+    {% for message in messages %}
+        <div class="chat-box">
+            <div class="chat-header">
+                名前：{{message.name}}
+            </div>
+            <div class="chat-body">
+                {{message.content}}
+            </div>
+        </div>
+    {% endfor %}
+        <div id="footer"></div>
+    </div>
+
+   
+
+    
+
+    <div class="chat-room-footer">
+        <div style="display:inline-flex">
+            <div class="send-msg">
+                <form method="post">
+                    {% csrf_token %}
+                    <input placeholder="メッセージを入力" type="text" name="message" value="">
+                    <input type="submit" class="send" name="button" value="作成"> 
+                </form>
+            </div>
+            <div class="send-msg">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form }}
+                    <input type="submit" name="upload" value="アップロード" style="background-color:black; color:white">
+                </form>
+            </div>
+            <div class="send-msg">
+                {% if chance_flag %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="submit" name="start_journal_club" value="輪講を開始する" onClick="window.open('https://explore.zoom.us/ja/products/meetings/','_blank')" style="background-color:black; color:white">
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+</html>

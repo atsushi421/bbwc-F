@@ -26,6 +26,13 @@ class ChatView(View):
         
         if(room in user.jourclub.all()):
             context |= {'jourclub_flag':True}
+            
+        # 輪講希望を出している部屋に輪講希望者が2人以上いれば、通知を表示
+        jourclub_rooms = user.jourclub.all()
+        for jourclub_room in jourclub_rooms:
+            if(jourclub_room.jourclub.count() >= 2):
+                context |= {'chance_flag': True }
+                break
         
         
         return render(request, 'chat/chat_room.html', context)
@@ -55,6 +62,12 @@ class ChatView(View):
             user.jourclub.remove(room)
             user.save()
             message =  "輪講希望を取り下げました"
+        
+        elif('start_journal_club' in request.POST):
+            Paper.objects.create(name=room_name, user=user)
+            user.score += 20
+            user.save()
+            message =  "輪講を開始します。\nミーティングのリンクを貼り、ミーティングに参加してください。"
         
         elif('upload' in request.POST):  # ファイルアップロードの場合
             file = request.FILES['file']
@@ -90,5 +103,12 @@ class ChatView(View):
         
         if(room in user.jourclub.all()):
             context |= {'jourclub_flag':True}
+            
+        # 輪講希望を出している部屋に輪講希望者が2人以上いれば、通知を表示
+        jourclub_rooms = user.jourclub.all()
+        for jourclub_room in jourclub_rooms:
+            if(jourclub_room.jourclub.count() >= 2):
+                context |= {'chance_flag': True }
+                break
         
         return render(request, 'chat/chat_room.html', context)

@@ -22,6 +22,14 @@ input {
     background: #f2f2f2;
 }
 
+input2 {
+    padding: 5px;
+    height: 30px;
+    width: 280px;
+    border: none;
+    background: #f2f2f2;
+}
+
 button {
     padding: 10px;
     padding-left: 20px;
@@ -34,6 +42,7 @@ button {
 form, send-msg {
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 300px;
     height: 50px;
 }
