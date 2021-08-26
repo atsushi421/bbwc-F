@@ -46,28 +46,35 @@ class ChatView(View):
         if('bookmark' in request.POST):  # ブックマークの場合
             user.book.add(room)
             user.save()
-            message =  "この部屋をブックマークしました"
+            message =  "I've bookmarked this room."
         
         elif('rm_bookmark' in request.POST):
             user.book.remove(room)
             user.save()
-            message =  "この部屋のブックマークを消しました"
+            message =  "I've deleted my bookmarks for this room."
         
         elif('jourclub' in request.POST):  # 輪講希望の場合
             user.jourclub.add(room)
             user.save()
-            message =  "輪講希望を出しました"
+            message =  "I've requested to do the journal club."
         
         elif('rm_jourclub' in request.POST):
             user.jourclub.remove(room)
             user.save()
-            message =  "輪講希望を取り下げました"
+            message =  "I've withdrawn my request to do the journal club."
         
         elif('start_journal_club' in request.POST):
-            Paper.objects.create(name=room_name, user=user)
+            if(Paper.objects.filter(name=room_name).count() == 0):
+                paper_instance = Paper.objects.create(name=room_name)
+                user.paper_set.add(paper_instance)
+                
+            else:
+                paper_instance = Paper.objects.get(name=room_name)
+                user.paper_set.add(paper_instance)
+                
             user.score += 20
             user.save()
-            message =  "輪講を開始します。\nミーティングのリンクを貼り、ミーティングに参加してください。"
+            message =  "Start the journal club.\nPlease paste the meeting link and join the meeting."
         
         elif('upload' in request.POST):  # ファイルアップロードの場合
             file = request.FILES['file']
@@ -77,7 +84,7 @@ class ChatView(View):
                 user.score += 10
                 user.save()
                 
-            message = file.name + " をアップロードしました"
+            message = file.name + " has been uploaded."
             
         else:
             message = request.POST['message']

@@ -8,7 +8,7 @@ class ProfileView(View):
         user = User.objects.get(id=kwargs['pk'])
         score = user.score
         file_list = File.objects.filter(user_id=user.id)
-        paper_list = Paper.objects.filter(user_id=user.id)
+        paper_list = Paper.objects.filter(user=user)
         
         context = {
             'us':user,
