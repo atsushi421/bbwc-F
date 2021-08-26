@@ -23,38 +23,41 @@ class IndexView(View):
         if(user.key5 != None):
             keyword += "%20" + user.key5
         print(keyword)
-        
+
         number = 10
         search_results_df = get_search_results_df(keyword,number)
-        
+
         # ランキング用
         ranking = User.objects.order_by('score').reverse().all()
-        
+
         # ブックマーク表示用
         bookmark = user.book.all()
-        
+
         json_records = search_results_df.reset_index().to_json(orient ='records')
         data = []
         data = json.loads(json_records)
-        
+
         context = {
             'search_results' : data,
             'ranking' : ranking,
             'bookmark' : bookmark,
         }
-        
+
         return render(request, 'registration/index.html', context)
 
 
 def get_search_results_df(keyword,number):
-    ua = UserAgent()
-    user_agent = ua.random
-    header = {"User-Agent":user_agent}
+    # ua = UserAgent()
+    # user_agent = ua.random
+    # header = {"User-Agent":user_agent}
     #time.sleep(5)
-    
+
+    return pd.read_pickle('./local_df.zip')
+
     columns = ["rank", "title", "writer", "year", "citations", "url"]
     df = pd.DataFrame(columns=columns) #表の作成
-    html_doc = requests.get("https://scholar.google.co.jp/scholar?hl=ja&as_sdt=0%2C5&num=" + str(number) + "&q=" + keyword, headers=header).text
+    # html_doc = requests.get("https://scholar.google.co.jp/scholar?hl=ja&as_sdt=0%2C5&num=" + str(number) + "&q=" + keyword, headers=header).text
+    html_doc = requests.get("https://scholar.google.co.jp/scholar?hl=ja&as_sdt=0%2C5&num=" + str(number) + "&q=" + keyword).text
     soup = BeautifulSoup(html_doc, "html.parser") # BeautifulSoupの初期化
     tags1 = soup.find_all("h3", {"class": "gs_rt"})  # title&url
     tags2 = soup.find_all("div", {"class": "gs_a"})  # writer&year
