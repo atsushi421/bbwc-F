@@ -23,38 +23,38 @@ class IndexView(View):
         if(user.key5 != None):
             keyword += "%20" + user.key5
         print(keyword)
-        
+
         number = 10
         search_results_df = get_search_results_df(keyword,number)
-        
+
         # ランキング用
         ranking = User.objects.order_by('score').reverse().all()
-        
+
         # ブックマーク表示用
         bookmark = user.book.all()
-        
+
         json_records = search_results_df.reset_index().to_json(orient ='records')
         data = []
         data = json.loads(json_records)
-        
+
         context = {
             'search_results' : data,
             'ranking' : ranking,
             'bookmark' : bookmark,
         }
-        
+
         # 輪講希望を出している部屋に輪講希望者が2人以上いれば、通知を表示
         jourclub_rooms = user.jourclub.all()
         for jourclub_room in jourclub_rooms:
             if(jourclub_room.jourclub.count() >= 2):
                 context |= {'chance_flag': True }
                 break
-                
+
         return render(request, 'registration/index.html', context)
-    
+
     def post(self, request, *args, **kwargs):
         room_list = Room.objects.filter(name__icontains=request.POST['keyword'])
-        
+
         context = {
             'room_list' : room_list,
         }
@@ -62,11 +62,13 @@ class IndexView(View):
 
 
 def get_search_results_df(keyword,number):
-    ua = UserAgent()
-    user_agent = ua.random
-    header = {"User-Agent":user_agent}
+    # ua = UserAgent()
+    # user_agent = ua.random
+    # header = {"User-Agent":user_agent}
     #time.sleep(5)
-    
+
+    return pd.read_pickle('./local_df.zip')
+
     columns = ["rank", "title", "writer", "year", "citations", "url"]
     df = pd.DataFrame(columns=columns) #表の作成
     html_doc = requests.get("https://scholar.google.co.jp/scholar?hl=ja&as_sdt=0%2C5&num=" + str(number) + "&q=" + keyword, headers=header).text
