@@ -6,40 +6,48 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../static/style.css">
-        <link rel="stylesheet" href="../static/profile.css">
+        <!-- <link rel="stylesheet" href="../static/profile.css"> -->
         <link rel="stylesheet" href="../../static/login.css">
+        <link rel="stylesheet" type="text/css" href="../../static/index.css">
     </head>
     <body class='wrap'>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="/">Home</a>
-            <a class="navbar-brand" href="{% url 'profile_edit' user.id %}">プロフィール編集</a>
+            <a class="navbar-brand" href="/"><u>Home</u></a>
+            <a class="navbar-brand" href="{% url 'profile_edit' user.id %}"><u>Edit Profile</u></a>
         </nav>
         <div class='content1'>
             <br>
-            <h1 class='heading-lv1 text-center'>{{ user.username }}  [email:{{ user.email }}]</h1>
-            <h2 class='heading-lv2 text-center'>Score</h2>
-            <p class='score text-center'>{{ score }}</p>
+            <h1><strong>{{ us.username }}</strong></h1>
+            <h2>email : {{ us.email }}</h2>
+            <p></p>
+            <h1><strong>Score</strong></h1>
+            <h1><font color="red">{{ score }}</font></h1>
             <br>
             <div class="container">
-                <div style="display:inline-flex" class="form-wrapper3">
-                    <div class="container2">
-                        <div class="form-footer2">
-                            <h1>アップロード資料</h1>
-                            <ul>
-                            {% for doc in file_list %}
-                                <li><a href="{{ doc.file.url }}">{{ doc.file.name }}</a></li>
-                            {% endfor %}
-                            </ul>
+                <div style="display:inline-flex">
+                    <div class="container">
+                        <div class="form-wrapper4">
+                            <h1>Uploaded Files</h1>
+                            <div class="form-footer2">
+                                <ul>
+                                    {% for doc in file_list %}
+                                        <li><a href="{{ doc.file.url }}">{{ doc.file.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                    <div class="container2">
-                        <div class="form-footer2">
-                            <h1>輪講履歴</h1>
-                            <ul>
-                            {% for paper in paper_list %}
-                                <li><a href="/chat/{{ paper.name }}">{{ paper.name }}</a></li>
-                            {% endfor %}
-                            </ul>
+                
+                    <div class="container">
+                        <div class="form-wrapper4">
+                            <h1>Journal club historys</h1>
+                            <div class="form-footer2">
+                                <ul>
+                                    {% for paper in paper_list %}
+                                        <li><a href="/chat/{{ paper.name }}">{{ paper.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -47,3 +55,4 @@
         </div>
     </body>
 </html>
+

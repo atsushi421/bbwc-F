@@ -6,20 +6,18 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../static/style.css">
-        <link rel="stylesheet" href="../../static/login.css">
     </head>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/"><u>Home</u></a>
-        <a class="navbar-brand" href="{% url 'create_room' %}"><u>Create Room</u></a>
-    </nav>
-    <div class="form-wrapper5">
-        <h1>Search Results</h1>
-        <div class="form-footer2">
-            <ul>
-            {% for room in room_list %}
-                <li><a href="/chat/{{ room.name }}">{{ room.name }} &nbsp; [{{ room.user_set.count }}] &nbsp; ({{ room.jourclub.count }})</a></li>
-            {% endfor %}
-            </ul>
+    <body style="background: #e9e9e9">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+           <a class="navbar-brand" href="{% url 'logout' %}">ログアウト</a>
+       </nav>
+       {% if chance_flag %}
+           <div class="alert alert-success">あなたが輪講希望を出している部屋に輪講希望が出されています！</div>
+       {% endif %}
+        <div class="container mt-4" style="height:2000px;">
+            {% block main %}
+            <p>※コンテンツがありません。</p>
+            {% endblock %}
         </div>
-    </div>
+    </body>
 </html>

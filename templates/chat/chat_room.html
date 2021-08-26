@@ -14,29 +14,29 @@
 
     <div class="header">
         <a href="{% url 'index' %}" class="back">Home</a>
-        {{ room.name }} &nbsp; [{{ num_bookmark }}] &nbsp; ({{ num_jourclub }})
-        <a href="{% url 'file_list' room.name %}" class="back_right">資料一覧</a>
+        <div style="font-size: 20px;">{{ room.name }} &nbsp; [{{ num_bookmark }}] &nbsp; ({{ num_jourclub }})</div>
+        <a href="{% url 'file_list' room.name %}" class="back_right">Uploaded File Lists</a>
         {% if book_flag %}
         <form method="post">
             {% csrf_token %}
-            <input type="submit" name="rm_bookmark" value="ブックマークを消す" style="height:30px;border-radius:30px;color:red;font-weight: bold;">
+            <input type="submit" name="rm_bookmark" value="Remove Bookmark" style="height:30px;border-radius:30px;color:red;font-weight: bold;">
         </form>
         {% else %}
         <form method="post">
             {% csrf_token %}
-            <input type="submit" name="bookmark" value="ブックマーク" style="height:30px;border-radius:30px;color:blue;font-weight: bold;">
+            <input type="submit" name="bookmark" value="Add Bookmark" style="height:30px;border-radius:30px;color:blue;font-weight: bold;">
         </form>
         {% endif %}
 
         {% if jourclub_flag %}
         <form method="post">
             {% csrf_token %}
-            <input type="submit" name="rm_jourclub" value="輪講の希望を取り下げる" style="height:30px;border-radius:30px;color:red;font-weight: bold;">
+            <input type="submit" name="rm_jourclub" value="Cancel your Request" style="height:30px;border-radius:30px;color:red;font-weight: bold;">
         </form>
         {% else %}
         <form method="post">
             {% csrf_token %}
-            <input type="submit" name="jourclub" value="輪講を希望する" style="height:30px;border-radius:30px;color:blue;font-weight: bold;">
+            <input type="submit" name="jourclub" value="Request for Journal Club" style="height:30px;border-radius:30px;color:blue;font-weight: bold;">
         </form>
         {% endif %}
     </div>
@@ -45,7 +45,7 @@
     {% for message in messages %}
         <div class="chat-box">
             <div class="chat-header">
-                名前：{{message.name}}
+                username：<a href="{% url 'profile' message.user_id %}">{{message.user.username}}</a>
             </div>
             <div class="chat-body">
                 {{message.content}}
@@ -55,34 +55,30 @@
         <div id="footer"></div>
     </div>
 
-   
-
-    
-
     <div class="chat-room-footer">
         <div style="display:inline-flex">
             <div class="send-msg">
                 <form method="post">
                     {% csrf_token %}
-                    <input placeholder="メッセージを入力" type="text" name="message" value="">
-                    <input type="submit" class="send" name="button" value="作成"> 
+                    <input placeholder="Enter a message" type="text" name="message" value="">
+                    <input type="submit" class="send" name="button" value="Send"> 
                 </form>
             </div>
             <div class="send-msg">
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form }}
-                    <input type="submit" name="upload" value="アップロード" style="background-color:black; color:white">
+                    <input type="submit" name="upload" value="Upload" style="background-color:black; color:white;font-size: 20px;" class="remove-label">
                 </form>
             </div>
-            <div class="send-msg">
-                {% if chance_flag %}
-                    <form method="post">
-                        {% csrf_token %}
-                        <input type="submit" name="start_journal_club" value="輪講を開始する" onClick="window.open('https://explore.zoom.us/ja/products/meetings/','_blank')" style="background-color:black; color:white">
-                    </form>
-                {% endif %}
+            {% if chance_flag %}
+            <div class="send-msg"></div>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="submit" name="start_journal_club" value="Start Journal Club" onClick="window.open('https://explore.zoom.us/ja/products/meetings/','_blank')" style="background-color:black; color:white">
+                </form>
             </div>
+            {% endif %}
         </div>
     </div>
 

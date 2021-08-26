@@ -5,37 +5,37 @@ from .room import Room
 
 # ユーザモデルの拡張
 class User(AbstractUser):
-    email = models.EmailField('メールアドレス', unique=True)  # unique=True は重複付加 & 入力必須
+    email = models.EmailField('email', unique=True)  # unique=True は重複付加 & 入力必須
 
-    key1 = models.CharField(
+    keyword1 = models.CharField(
         max_length = 255,
         blank = False,
         null = False,
         default="",
     )
     
-    key2 = models.CharField(
+    keyword2 = models.CharField(
         max_length = 255,
         blank = True,
         null = True,
         default="",
     )
     
-    key3 = models.CharField(
+    keyword3 = models.CharField(
         max_length = 255,
         blank = True,
         null = True,
         default="",
     )
     
-    key4 = models.CharField(
+    keyword4 = models.CharField(
         max_length = 255,
         blank = True,
         null = True,
         default="",
     )
     
-    key5 = models.CharField(
+    keyword5 = models.CharField(
         max_length = 255,
         blank = True,
         null = True,

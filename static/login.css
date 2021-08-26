@@ -33,9 +33,9 @@ ul.errorlist {
 
 .form-wrapper2 {
   background: #fafafa;
-  margin: 3em auto;
+  margin: 1em auto;
   padding: 1em 5em;
-  max-width: 700px;
+  max-width: 1500px;
 }
 
 .form-wrapper3 {
@@ -43,6 +43,20 @@ ul.errorlist {
   margin: auto auto;
   padding: 1em 1em;
   max-width: 1700px;
+}
+
+.form-wrapper4 {
+  background: #fafafa;
+  margin: 1em 4em;
+  padding: 1em 5em;
+  max-width: 700px;
+}
+
+.form-wrapper5 {
+  background: #fafafa;
+  margin: 3em auto;
+  padding: 1em 5em;
+  max-width: 700px;
 }
 
 .container2 {

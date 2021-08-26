@@ -10,12 +10,12 @@
         <link rel="stylesheet" href="../../static/login.css">
     </head>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Home</a>
-        <a class="navbar-brand" href="{% url 'password_change' %}">パスワードの変更</a>
+        <a class="navbar-brand" href="/"><u>Home</u></a>
+        <a class="navbar-brand" href="{% url 'password_change' %}"><u>Change Password</u></a>
     </nav>
 
     <div class="form-wrapper">
-        <h1>Profile Update</h1>
+        <h1>Edit Profile</h1>
         <div class="form-item">
             <form method="post">
                 {% csrf_token %}
