@@ -1,5 +1,5 @@
 # Usage
-1. `git clone https://github.com/atsushi421/HardBond.git`
+1. `git clone git@github.com:atsushi421/bbwc-F.git`
 2. `cd bbwc-F`
 3. `pip install -r requirements.txt`
 4. `python manage.py makemigrations`
