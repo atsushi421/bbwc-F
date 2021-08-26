@@ -45,7 +45,7 @@
     {% for message in messages %}
         <div class="chat-box">
             <div class="chat-header">
-                username：<a href="{% url 'profile' message.user_id %}">{{message.user.username}}</a>
+                username：<a href="{% url 'profile' message.user_id %}">{{message.user.username}}</a> &nbsp;{{message.created_at}}
             </div>
             <div class="chat-body">
                 {{message.content}}
@@ -75,7 +75,7 @@
             <div class="send-msg"></div>
                 <form method="post">
                     {% csrf_token %}
-                    <input type="submit" name="start_journal_club" value="Start Journal Club" onClick="window.open('https://explore.zoom.us/ja/products/meetings/','_blank')" style="background-color:black; color:white">
+                    <input type="submit" name="start_journal_club" value="Start Journal Club" onClick="window.open('https://explore.zoom.us/ja/products/meetings/','_blank')" style="background-color:black; color:white;font-size: 20px;">
                 </form>
             </div>
             {% endif %}

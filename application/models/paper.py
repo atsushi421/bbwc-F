@@ -10,9 +10,7 @@ class Paper(models.Model):
     
     read_at = models.DateTimeField(auto_now_add=True)
     
-    user = models.ForeignKey(
+    user = models.ManyToManyField(
         User,
         blank=True,
-        null=True,
-        on_delete=models.SET_NULL,
     )

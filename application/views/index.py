@@ -13,19 +13,6 @@ import json
 class IndexView(View):
     def get(self, request, *args, **kwargs):
         user = User.objects.get(pk=request.user.id)
-        keyword = user.keyword1
-        if(user.keyword2 != None):
-            keyword += "%20" + user.keyword2
-        if(user.keyword3 != None):
-            keyword += "%20" + user.keyword3
-        if(user.keyword4 != None):
-            keyword += "%20" + user.keyword4
-        if(user.keyword5 != None):
-            keyword += "%20" + user.keyword5
-        print(keyword)
-        
-        number = 10
-        search_results_df = get_search_results_df(keyword,number)
         
         # ランキング用
         ranking = User.objects.order_by('score').reverse().all()
@@ -33,15 +20,80 @@ class IndexView(View):
         # ブックマーク表示用
         bookmark = user.book.all()
         
-        json_records = search_results_df.reset_index().to_json(orient ='records')
-        data = []
-        data = json.loads(json_records)
-        
         context = {
-            'search_results' : data,
             'ranking' : ranking,
             'bookmark' : bookmark,
         }
+        
+        if (user.paper_set.all().count() == 0):  # 参加した輪講が0の場合、キーワードでレコメンド
+            keyword = []
+            keyword.append(user.keyword1)
+            if(user.keyword2 != None):
+                keyword.append(user.keyword2)
+            else:
+                keyword.append("")
+            if(user.keyword3 != None):
+                keyword.append(user.keyword3)
+            else:
+                keyword.append("")
+            if(user.keyword4 != None):
+                keyword.append(user.keyword4)
+            else:
+                keyword.append("")
+            if(user.keyword5 != None):
+                keyword.append(user.keyword5)
+            else:
+                keyword.append("")
+            
+            # keyword = user.keyword1
+            # if(user.keyword2 != None):
+            #     keyword += "%20" + user.keyword2
+            # if(user.keyword3 != None):
+            #     keyword += "%20" + user.keyword3
+            # if(user.keyword4 != None):
+            #     keyword += "%20" + user.keyword4
+            # if(user.keyword5 != None):
+            #     keyword += "%20" + user.keyword5
+            print(keyword)
+            
+            number = 10
+            search_results_df = get_search_results_df(keyword,number)
+            
+            json_records = search_results_df.reset_index().to_json(orient ='records')
+            data = []
+            data = json.loads(json_records)
+            
+            context |= {'search_results' : data}
+        
+        else:  # 過去に輪講に参加したことがある場合
+            my_papers = user.paper_set.all()
+            recommend_papers_names = []
+            
+            for my_paper in my_papers:
+                part_users = my_paper.user.all()
+                
+                for part_user in part_users:
+                    recommend_papers = part_user.paper_set.all()
+                    
+                    for recommend_paper in recommend_papers:
+                        recommend_papers_names.append(recommend_paper.name)
+                    
+            df = pd.read_csv('./paper.csv')
+            search_results_df = df[df['title'].str.contains("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")]
+            
+            for recommend_papers_name in recommend_papers_names:
+                search_result = df[df['title'].str.contains(recommend_papers_name)]
+                if(len(search_result) == 0):
+                    continue
+                else:
+                    search_results_df = pd.concat([search_results_df, search_result])
+                    
+            json_records = search_results_df.reset_index().to_json(orient ='records')
+            data = []
+            data = json.loads(json_records)
+                
+            context |= {'search_results' : data}
+                    
         
         # 輪講希望を出している部屋に輪講希望者が2人以上いれば、通知を表示
         jourclub_rooms = user.jourclub.all()
@@ -66,8 +118,10 @@ def get_search_results_df(keyword,number):
     # user_agent = ua.random
     # header = {"User-Agent":user_agent}
     #time.sleep(5)
+    df = pd.read_csv('./paper.csv')
+    searched_df = df[df['title'].str.contains(keyword[0]) & df['title'].str.contains(keyword[1]) & df['title'].str.contains(keyword[2]) & df['title'].str.contains(keyword[3]) & df['title'].str.contains(keyword[4])]
     
-    return pd.read_csv('./paper.csv')
+    return searched_df[:number]
     
     # columns = ["rank", "title", "writer", "year", "citations", "url"]
     # df = pd.DataFrame(columns=columns) #表の作成
