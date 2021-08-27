@@ -14,30 +14,38 @@
 
     <div class="header">
         <a href="{% url 'index' %}" class="back">Home</a>
-        <div style="font-size: 20px;">{{ room.name }} &nbsp; [{{ num_bookmark }}]&nbsp;({{ num_jourclub }})</div>
+        <div style="font-size: 15px;">{{ room.name }} &nbsp; [{{ num_bookmark }}]&nbsp;({{ num_jourclub }})</div>
         <a href="{% url 'file_list' room.name %}" class="back_right">Uploaded File Lists</a>
         {% if book_flag %}
-        <form method="post">
-            {% csrf_token %}
-            <input type="submit" name="rm_bookmark" value="Remove Bookmark" style="height:30px;border-radius:30px;color:red;font-weight: bold;">
-        </form>
+        <div class="send-msg2">
+            <form method="post">
+                {% csrf_token %}
+                <input type="submit" name="rm_bookmark" value="Remove Bookmark" style="height:30px;border-radius:30px;color:red;font-weight: bold;">
+            </form>
+        </div>
         {% else %}
+        <div class="send-msg2">
         <form method="post">
             {% csrf_token %}
             <input type="submit" name="bookmark" value="Add Bookmark" style="height:30px;border-radius:30px;color:blue;font-weight: bold;">
         </form>
+        </div>
         {% endif %}
 
         {% if jourclub_flag %}
-        <form method="post">
-            {% csrf_token %}
-            <input type="submit" name="rm_jourclub" value="Cancel your Request" style="height:30px;border-radius:30px;color:red;font-weight: bold;">
-        </form>
+        <div class="send-msg2">
+            <form method="post">
+                {% csrf_token %}
+                <input type="submit" name="rm_jourclub" value="Cancel your Request" style="height:30px;border-radius:30px;color:red;font-weight: bold;">
+            </form>
+        </div>
         {% else %}
-        <form method="post">
-            {% csrf_token %}
-            <input type="submit" name="jourclub" value="Request for Journal Club" style="height:30px;border-radius:30px;color:blue;font-weight: bold;">
-        </form>
+        <div class="send-msg2">
+            <form method="post">
+                {% csrf_token %}
+                <input type="submit" name="jourclub" value="Request for Journal Club" style="height:30px;border-radius:30px;color:blue;font-weight: bold;">
+            </form>
+        </div>
         {% endif %}
     </div>
 
@@ -64,7 +72,7 @@
                     <input type="submit" class="send" name="button" value="Send"> 
                 </form>
             </div>
-            <div class="send-msg">
+            <div class="send-msg2">
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form }}
