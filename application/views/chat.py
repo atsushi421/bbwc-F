@@ -82,7 +82,7 @@ class ChatView(View):
                 user.score += 10
                 user.save()
                 
-            message = file.name + " has been uploaded."
+            message = "「" + file.name + "」 has been uploaded."
             
         else:
             message = request.POST['message']

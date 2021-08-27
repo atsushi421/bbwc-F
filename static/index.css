@@ -165,7 +165,7 @@ body {
 
     /* font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", YuGothic, "ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, Arial, "メイリオ", Meiryo, sans-serif; */
     font-family: "メイリオ";
-    height: 2000px;
+    height: 100%;
 }
 
 .mt-4, .my-4 {
